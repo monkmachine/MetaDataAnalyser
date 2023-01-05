@@ -49,7 +49,7 @@ public class MainController implements Initializable {
     @FXML
     private  ProgressBar bar;
     private Thread metaScrapeThread;
-    private DBConnection dbCon = new DBConnection();
+    private final DBConnection dbCon = new DBConnection();
 
 
     @FXML
@@ -201,7 +201,7 @@ public class MainController implements Initializable {
             dbCon.close();
             Platform.runLater(() -> {
                 if (pathnames != null) {
-                    progressTxt.setText("Process complete " + pathnames.length + " files were processed");
+                    Platform.runLater(() -> progressTxt.setText("Process complete " + pathnames.length + " files were processed"));
                 }
             });
             return null;
