@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="600.0" minWidth="779.0" prefHeight="874.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dsc.main.DashBoard" />
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1080.0" prefWidth="1900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dsc.main.DashBoard">
+   <children>
+      <HBox prefHeight="1084.0" prefWidth="1900.0">
+         <children>
+            <TableView fx:id="tableView" prefHeight="948.0" prefWidth="341.0">
+               <columns>
+                  <TableColumn fx:id="metaDataKey" prefWidth="264.0" text="MetaDataKey" />
+                  <TableColumn fx:id="count" prefWidth="85.0" text="count" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="949.0" prefWidth="1560.0">
+               <children>
+                  <PieChart fx:id="pie" prefHeight="1024.0" prefWidth="1557.0" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

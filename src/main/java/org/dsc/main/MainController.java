@@ -1,16 +1,19 @@
 package org.dsc.main;
 
 import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import org.dsc.utilties.DBConnection;
+import org.dsc.utilties.Singleton;
 import org.dsc.utilties.jsonReader;
 import org.dsc.utilties.tikaRequest;
 
@@ -80,6 +83,9 @@ public class MainController implements Initializable {
         }
 
     }
+    public StringProperty firstFieldTextProperty() {
+        return jdbcUrl.textProperty();
+    }
     @FXML
     protected void onRunProcess() {
         runLlongTask();
@@ -103,7 +109,9 @@ public class MainController implements Initializable {
         }
 
     }
+    protected void onPopulateData(){
 
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> dbDropDownOptions =
@@ -114,7 +122,6 @@ public class MainController implements Initializable {
                 );
         dbDropDown.setItems(dbDropDownOptions);
         dbDropDown.getSelectionModel().selectFirst();
-
         jdbcUrl.setText(dbCon.jDBCUrlformat(dbDropDown.getSelectionModel().getSelectedItem()));
 
 

@@ -14,7 +14,7 @@ public class MetaDataProgram extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MetaDataProgram.class.getResource("hello-view.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 700, 800);
+        Scene scene = new Scene(fxmlLoader.load(), 1900, 1080);
         stage.setTitle("Tika Meta Data Analyser");
         stage.getIcons().add(new Image(Objects.requireNonNull(MetaDataProgram.class.getResource("tika.png")).openStream()));
         stage.setScene(scene);
