@@ -8,14 +8,15 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.dsc.utilties.DBConnection;
-import org.dsc.utilties.Singleton;
-import org.dsc.utilties.jsonReader;
-import org.dsc.utilties.tikaRequest;
+import org.dsc.utilties.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class MainController implements Initializable {
     private  ProgressBar bar;
     private Thread metaScrapeThread;
     private final DBConnection dbCon = new DBConnection();
+    private TextField  textfield;
+    private jdbcDetails jdbcDetails;
 
 
     @FXML
@@ -107,9 +110,6 @@ public class MainController implements Initializable {
                 outSelectedFolder.setText(selectedFile.getAbsolutePath());
             }
         }
-
-    }
-    protected void onPopulateData(){
 
     }
     @Override
@@ -212,6 +212,28 @@ public class MainController implements Initializable {
                 }
             });
             return null;
+        }
+    }
+    public void onPopulateData(){
+
+        try {
+            FXMLLoader loader = new 		  FXMLLoader(getClass().getResource("DashBoard.fxml"));
+            Parent root = loader.load();
+
+            //The following both lines are the only addition we need to pass the arguments
+            DashBoard controller2 = loader.getController();
+            jdbcDetails = new jdbcDetails(jdbcUrl.getText(),userId.getText(),password.getText());
+            controller2.passJdBcDetails(jdbcDetails);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Tika Meta Data Analyser");
+            stage.getIcons().add(new Image(Objects.requireNonNull(MetaDataProgram.class.getResource("tika.png")).openStream()));
+            stage.setTitle("Database Details");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

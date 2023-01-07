@@ -34,6 +34,13 @@ public class postGres {
         st.executeUpdate();
         stmt.close();
     }
+    public ResultSet runStatement () throws SQLException {
+        Statement  st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+        ResultSet rs = st.executeQuery("select cast(value as Integer),text from (SELECT count(\"MetaDataKey\") as value,\"MetaDataKey\" as text FROM \"MetaData\".\"MetaData\" where \"Active\" IS null group by \"MetaDataKey\") t1 order by value desc limit 500");
+
+        return rs;
+    }
     public void pgCloseConection() throws SQLException {
         con.close();
     }

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
@@ -12,6 +13,8 @@ import javafx.util.Duration;
 import org.dsc.components.MetaPieChart;
 import org.dsc.dataClasses.MetaData;
 import org.dsc.dbProviders.postGrestest;
+import org.dsc.utilties.DBConnection;
+import org.dsc.utilties.jdbcDetails;
 
 
 import java.net.URL;
@@ -30,12 +33,26 @@ public class DashBoard implements Initializable {
     private PieChart pie;
     @FXML
     ResultSet rs;
+    private Label label;
     private final ObservableList<MetaData> data = FXCollections.observableArrayList();
     private final ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+    private jdbcDetails jdbcDetails;
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void passJdBcDetails(jdbcDetails jdbcDetails){
+        this.jdbcDetails = jdbcDetails;
+        DBConnection dbConnection = new DBConnection();
+        System.out.println(jdbcDetails);
+        dbConnection.setJDBCUrl(jdbcDetails.getUrl());
+        try {
+            dbConnection.setDBConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            rs = dbConnection.runSelectStatment();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         setMetaTableView();
         MetaPieChart mpc = new MetaPieChart();
@@ -44,6 +61,11 @@ public class DashBoard implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
 
 
     }
@@ -51,7 +73,6 @@ public class DashBoard implements Initializable {
     private void setMetaTableView() {
         count.setCellValueFactory(cellData -> cellData.getValue().getCountProperty());
         metaDataKey.setCellValueFactory(cellData -> cellData.getValue().metaDataKey);
-        getPGResults();
         try {
             while (true) {
                 try {

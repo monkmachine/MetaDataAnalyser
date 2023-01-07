@@ -1,6 +1,8 @@
 package org.dsc.utilties;
 
 import org.dsc.dbProviders.postGres;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Map;
@@ -56,6 +58,10 @@ public class DBConnection {
 
     public void runStatement(String name, String key, String value) throws SQLException {
         pg.runStatement(name, key, value);
+    }
+    public ResultSet runSelectStatment() throws SQLException {
+
+        return  pg.runStatement();
     }
     public void commit() throws SQLException {
         pg.commit();
